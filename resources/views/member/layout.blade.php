@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sistem Informasi Laundry</title>
+    <title>Sistem Informasi Helpdesk J&T Express</title>
     <meta name="csrf-token" content="{{csrf_token()}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,7 +78,7 @@
 <section id="footer" class="footer d-flex justify-content-between align-items-center p-5">
     <div class="text-center">
         <img src="{{ asset('/assets/logo.png') }}" height="150" alt="logo footer">
-        <p style="color: whitesmoke">Sistem Informasi My Laundry</p>
+        <p style="color: whitesmoke">Sistem Informasi Helpdesk J&T Express</p>
     </div>
     <div class="text-center">
         <p style="color: whitesmoke">Kunjungi Tempat Kami</p>

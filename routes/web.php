@@ -14,3 +14,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\Member\HomeController::class, 'index'])->name('home');
+Route::get('/track', [\App\Http\Controllers\Member\HomeController::class, 'track'])->name('home.track');

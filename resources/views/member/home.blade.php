@@ -26,7 +26,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="No. Resi" aria-label="No. Resi" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" placeholder="No. Resi" aria-label="No. Resi"
+                                   aria-describedby="basic-addon1">
                         </div>
                     </div>
                     <button type="button" class="btn btn-danger" id="btn-lacak"><i class="fa fa-search"></i></button>
@@ -55,4 +56,25 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+
+    <script>
+
+        async function getTrack() {
+            try {
+                let response = await $.get('/track?awb=JP4628384219');
+                console.log(response);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        $(document).ready(function () {
+            $('#btn-lacak').on('click', function (e) {
+                getTrack();
+            })
+        });
+    </script>
 @endsection

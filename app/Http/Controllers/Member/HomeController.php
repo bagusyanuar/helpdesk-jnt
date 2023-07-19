@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Member;
 
 
 use App\Helper\CustomController;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends CustomController
 {
@@ -16,5 +17,23 @@ class HomeController extends CustomController
     public function index()
     {
         return view('member.home');
+    }
+
+    public function track()
+    {
+        try {
+            $awb = $this->field('awb');
+            $url = 'https://api.binderbyte.com/v1/track';
+            $response = Http::get($url, [
+                'api_key' => '806c0b2d00d8bb91d9a425db2da57e234b2d4b65ad3439e385c7cef4fed35f4c',
+                'courier' => 'jnt',
+                'awb' => $awb
+            ]);
+            $body = json_decode($response->body(), true);
+
+            dd($body);
+        }catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 }
