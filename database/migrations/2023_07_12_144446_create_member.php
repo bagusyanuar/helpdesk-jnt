@@ -16,6 +16,7 @@ class CreateMember extends Migration
         Schema::create('member', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
+            $table->string('email')->unique();
             $table->string('nama');
             $table->string('no_hp', 16);
             $table->timestamps();
