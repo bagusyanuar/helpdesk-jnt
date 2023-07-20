@@ -30,10 +30,11 @@ class HomeController extends CustomController
                 'awb' => $awb
             ]);
             $body = json_decode($response->body(), true);
-
-            dd($body);
+//            dd($body);
+            return $this->jsonResponse('success', 200, $body);
         }catch (\Exception $e) {
-            dd($e->getMessage());
+//            dd($e->getMessage());
+            return $this->jsonResponse('terjadi kesalahan...', 500);
         }
     }
 }

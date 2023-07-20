@@ -40,17 +40,17 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link custom-nav-item" href="{{ route('home') }}">Beranda <span
-                        class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link custom-nav-item" href="#">Paket</a>
-            </li>
+            {{--            <li class="nav-item active">--}}
+            {{--                <a class="nav-link custom-nav-item" href="{{ route('home') }}">Beranda <span--}}
+            {{--                        class="sr-only">(current)</span></a>--}}
+            {{--            </li>--}}
+            {{--            <li class="nav-item">--}}
+            {{--                <a class="nav-link custom-nav-item" href="#">Paket</a>--}}
+            {{--            </li>--}}
 
             @auth()
                 <li class="nav-item">
-                    <a class="nav-link custom-nav-item" href="#">Pesanan</a>
+                    <a class="nav-link custom-nav-item" href="#">Ticket</a>
                 </li>
             @endauth
         </ul>
@@ -58,16 +58,17 @@
             @auth()
                 <img src="{{ asset('/assets/user.png') }}" height="20" alt="icon user" class="mr-2">
                 <div class="dropdown">
-                    <a href="#" class="btn-logout" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                    <a href="#" class="btn-logout custom-nav-item" id="dropdownMenuButton" data-toggle="dropdown"
+                       aria-haspopup="true"
                        aria-expanded="false">
                         {{ auth()->user()->username }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Logout</a>
+                        <a class="dropdown-item" href="{{ route('member.logout') }}">Logout</a>
                     </div>
                 </div>
             @else
-                <a href="#" class="btn-login">
+                <a href="{{ route('member.login') }}" class="btn-login">
                     Login
                 </a>
             @endauth

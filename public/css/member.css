@@ -43,11 +43,11 @@
 }
 
 .custom-nav-item{
-    color: #a0aec0 !important;
+    color: whitesmoke !important;
 }
 
 .custom-nav-item:hover {
-    color: whitesmoke !important;
+    color: white !important;
 }
 
 .card-paket {
@@ -75,12 +75,12 @@
 
 .btn-logout {
     text-decoration: none;
-    color: #a0aec0 !important;
+    color: whitesmoke !important;
 }
 
 .btn-logout:hover {
     text-decoration: none;
-    color: whitesmoke !important;
+    color: white !important;
 }
 
 .footer {
