@@ -1,6 +1,11 @@
 @extends('member.layout')
 
 @section('content')
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire("Berhasil", '{{\Illuminate\Support\Facades\Session::get('success')}}', "success")
+        </script>
+    @endif
     <div class="hero-dark d-flex align-items-center">
         <div class="w-50 p-5 left-hero pr-5">
             <p style="font-size: 46px;" class="font-weight-bold">Helpdesk J&T Express</p>
@@ -39,7 +44,7 @@
             <div class="col-4">
                 <div class="card">
                     <div class="card-body">
-                        <form method="post">
+                        <form method="post" id="form-ticket">
                             @csrf
                             <p class="font-weight-bold">Buat Ticket</p>
                             <hr>
@@ -128,7 +133,7 @@
         $(document).ready(function () {
             $('#btn-lacak').on('click', function (e) {
                 getTrack();
-            })
+            });
 
             $('#btn-no-auth-ticket').on('click', function (e) {
                 Swal.fire({
@@ -139,6 +144,22 @@
                     confirmButtonText: 'OK',
                 }).then((result) => {
                     window.location.href = '/login';
+                });
+            })
+
+            $('#btn-ticket').on('click', function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: "Konfirmasi!",
+                    text: "Apakah anda yakin membuat ticket?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    $('#form-ticket').submit();
                 });
             })
         });

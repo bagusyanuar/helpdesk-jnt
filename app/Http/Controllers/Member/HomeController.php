@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Member;
 
 
 use App\Helper\CustomController;
+use App\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class HomeController extends CustomController
@@ -16,6 +18,22 @@ class HomeController extends CustomController
 
     public function index()
     {
+        if ($this->request->method() === 'POST') {
+            try {
+                $data = [
+                    'user_id' => auth()->id(),
+                    'tanggal' => Carbon::now(),
+                    'no_ticket' => 'TKT-'.Carbon::now()->format('YmdHis'),
+                    'no_resi' => $this->postField('resi'),
+                    'deskripsi' => $this->postField('deskripsi'),
+                    'status' => 0
+                ];
+                Ticket::create($data);
+                return redirect()->back()->with('success', 'Berhasil mengirimkan ticket...');
+            }catch (\Exception $e) {
+                return redirect()->back()->with('failed', 'terjadi kesalahan');
+            }
+        }
         return view('member.home');
     }
 

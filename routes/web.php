@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\Member\HomeController::class, 'index'])->name('home');
-Route::match(['post', 'get'],'/login', [\App\Http\Controllers\Member\AuthController::class, 'login'])->name('member.login');
-Route::match(['post', 'get'],'/register', [\App\Http\Controllers\Member\AuthController::class, 'register'])->name('member.register');
+Route::match(['post', 'get'], '/login', [\App\Http\Controllers\Member\AuthController::class, 'login'])->name('member.login');
+Route::match(['post', 'get'], '/register', [\App\Http\Controllers\Member\AuthController::class, 'register'])->name('member.register');
 Route::get('/logout', [\App\Http\Controllers\Member\AuthController::class, 'logout'])->name('member.logout');
 Route::get('/track', [\App\Http\Controllers\Member\HomeController::class, 'track'])->name('home.track');
+
+Route::group(['middleware' => 'auth:web'], function () {
+    Route::post('/', [\App\Http\Controllers\Member\HomeController::class, 'index'])->name('ticket.post');
+});
