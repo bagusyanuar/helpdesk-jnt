@@ -5,20 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ticket extends Model
+class Comment extends Model
 {
     use HasFactory;
 
-    protected $table = 'ticket';
-
     protected $fillable = [
+        'ticket_id',
         'user_id',
-        'tanggal',
-        'no_ticket',
-        'no_resi',
-        'deskripsi',
-        'status'
+        'comment',
+        'lampiran',
+        'is_admin'
     ];
+
+    protected $casts = [
+        'is_admin' => 'boolean'
+    ];
+
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class, 'ticket_id');
+    }
 
     public function user()
     {
