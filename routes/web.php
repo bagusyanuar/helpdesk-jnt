@@ -50,6 +50,10 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::group(['prefix' => 'ticket-tutup'], function () {
         Route::match(['get', 'post'], '/', [\App\Http\Controllers\Admin\TicketController::class, 'ticket_closed'])->name('admin.ticket.closed');
         Route::match(['get', 'post'], '/{id}', [\App\Http\Controllers\Admin\TicketController::class, 'ticket_closed_detail'])->name('admin.ticket.closed.detail');
-//        Route::post( '/{id}/close', [\App\Http\Controllers\Admin\TicketController::class, 'ticket_process_close'])->name('admin.ticket.proses.close');
+    });
+
+    Route::group(['prefix' => 'laporan-ticket'], function () {
+        Route::get( '/', [\App\Http\Controllers\Admin\LaporanController::class, 'index'])->name('admin.report.ticket');
+        Route::get( '/cetak', [\App\Http\Controllers\Admin\LaporanController::class, 'cetak'])->name('admin.report.ticket.cetak');
     });
 });

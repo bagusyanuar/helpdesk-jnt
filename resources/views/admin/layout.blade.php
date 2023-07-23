@@ -105,13 +105,13 @@
                 <li class="nav-header" style="padding: 0.5rem 1rem 0.5rem 1rem;">
                     Laporan
                 </li>
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{ route('admin.laporan.pesanan') }}"--}}
-{{--                       class="nav-link">--}}
-{{--                        <i class="fa fa-cogs nav-icon" aria-hidden="true"></i>--}}
-{{--                        <p>Pesanan</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.report.ticket') }}"
+                       class="nav-link">
+                        <i class="fa fa-bar-chart nav-icon" aria-hidden="true"></i>
+                        <p>Ticket</p>
+                    </a>
+                </li>
 {{--                <li class="nav-item">--}}
 {{--                    <a href="{{ route('admin.laporan.pendapatan') }}"--}}
 {{--                       class="nav-link">--}}
