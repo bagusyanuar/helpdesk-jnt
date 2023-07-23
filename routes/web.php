@@ -25,6 +25,10 @@ Route::get('/track', [\App\Http\Controllers\Member\HomeController::class, 'track
 Route::group(['middleware' => 'auth:web'], function () {
     Route::post('/', [\App\Http\Controllers\Member\HomeController::class, 'index'])->name('ticket.post');
 
+    Route::get('/ticket', [\App\Http\Controllers\Member\TicketController::class, 'index'])->name('ticket');
+    Route::match(['post', 'get'],'/ticket/{id}', [\App\Http\Controllers\Member\TicketController::class, 'detail'])->name('ticket.detail');
+
+
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
 
     Route::group(['prefix' => 'pengguna'], function () {
@@ -35,7 +39,17 @@ Route::group(['middleware' => 'auth:web'], function () {
 
     Route::group(['prefix' => 'ticket-baru'], function () {
         Route::match(['get', 'post'], '/', [\App\Http\Controllers\Admin\TicketController::class, 'ticket_baru'])->name('admin.ticket.baru');
-        Route::post('/{id}', [\App\Http\Controllers\Admin\PenggunaController::class, 'patch'])->name('admin.pengguna.update');
-        Route::post('/{id}/delete', [\App\Http\Controllers\Admin\PenggunaController::class, 'destroy'])->name('admin.pengguna.delete');
+    });
+
+    Route::group(['prefix' => 'ticket-proses'], function () {
+        Route::match(['get', 'post'], '/', [\App\Http\Controllers\Admin\TicketController::class, 'ticket_process'])->name('admin.ticket.proses');
+        Route::match(['get', 'post'], '/{id}', [\App\Http\Controllers\Admin\TicketController::class, 'ticket_process_detail'])->name('admin.ticket.proses.detail');
+        Route::post('/{id}/close', [\App\Http\Controllers\Admin\TicketController::class, 'ticket_process_close'])->name('admin.ticket.proses.close');
+    });
+
+    Route::group(['prefix' => 'ticket-tutup'], function () {
+        Route::match(['get', 'post'], '/', [\App\Http\Controllers\Admin\TicketController::class, 'ticket_closed'])->name('admin.ticket.closed');
+        Route::match(['get', 'post'], '/{id}', [\App\Http\Controllers\Admin\TicketController::class, 'ticket_closed_detail'])->name('admin.ticket.closed.detail');
+//        Route::post( '/{id}/close', [\App\Http\Controllers\Admin\TicketController::class, 'ticket_process_close'])->name('admin.ticket.proses.close');
     });
 });

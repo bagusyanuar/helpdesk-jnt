@@ -65,6 +65,12 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'comment' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/comment',
+            'url' => env('APP_URL') . '/public',
+            'visibility' => 'public',
+        ],
     ],
 
     /*

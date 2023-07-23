@@ -30,7 +30,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark-primary">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="{{ route('home') }}">
         <img src="{{ asset('/assets/logo.png') }}" alt="logo" height="40">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -50,7 +50,7 @@
 
             @auth()
                 <li class="nav-item">
-                    <a class="nav-link custom-nav-item" href="#">Ticket</a>
+                    <a class="nav-link custom-nav-item" href="{{ route('ticket') }}">Ticket</a>
                 </li>
             @endauth
         </ul>

@@ -24,4 +24,18 @@ class Ticket extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'ticket_id');
+    }
+
+    public function getLastReplyAttribute()
+    {
+        $comments = $this->comments()->orderBy('created_at', 'DESC')->first();
+        if ($comments && $comments->is_admin) {
+            return 'admin';
+        }
+        return 'customer';
+    }
 }

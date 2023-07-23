@@ -18,7 +18,7 @@ class TicketController extends CustomController
 
     public function ticket_baru()
     {
-        if ($this->request->method() === 'POST' && $this->request->ajax()) {
+        if ($this->request->method() === 'POST') {
             DB::beginTransaction();
             try {
                 $ticket = Ticket::find($this->postField('id'));
@@ -32,12 +32,17 @@ class TicketController extends CustomController
                     'lampiran' => null,
                     'is_admin' => true
                 ];
+                $lampiran = $this->generateImageName('file');
+                if ($lampiran !== '') {
+                    $data_request['lampiran'] = $lampiran;
+                    $this->uploadImage('file', $lampiran, 'comment');
+                }
                 Comment::create($data_request);
                 DB::commit();
-                return $this->jsonResponse('success', 200);
+                return redirect()->back()->with('success', 'Berhasil menanggapi ticket...');
             } catch (\Exception $e) {
                 DB::rollBack();
-                return $this->jsonResponse('failed ' . $e->getMessage(), 500);
+                return redirect()->back()->with('failed', 'Terjadi Kesalahan Server...');
             }
         }
         if ($this->request->ajax()) {
@@ -45,5 +50,68 @@ class TicketController extends CustomController
             return $this->basicDataTables($data);
         }
         return view('admin.ticket.baru');
+    }
+
+    public function ticket_process()
+    {
+        if ($this->request->ajax()) {
+            $data = Ticket::with(['user.member'])->where('status', '=', 1)->get()->append(['last_reply']);
+            return $this->basicDataTables($data);
+        }
+        return view('admin.ticket.proses');
+    }
+
+    public function ticket_process_detail($id)
+    {
+        if ($this->request->method() === 'POST') {
+            try {
+                $data_request = [
+                    'ticket_id' => $this->postField('id'),
+                    'user_id' => auth()->id(),
+                    'comment' => $this->postField('comment'),
+                    'lampiran' => null,
+                    'is_admin' => true
+                ];
+                $lampiran = $this->generateImageName('file');
+                if ($lampiran !== '') {
+                    $data_request['lampiran'] = $lampiran;
+                    $this->uploadImage('file', $lampiran, 'comment');
+                }
+                Comment::create($data_request);
+                return redirect()->back()->with('success', 'Berhasil menanggapi ticket...');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('failed', 'Terjadi Kesalahan Server...');
+            }
+        }
+        $data = Ticket::with(['user.member', 'comments'])->where('id', '=', $id)->firstOrFail();
+        return view('admin.ticket.proses-detail')->with(['data' => $data]);
+    }
+
+    public function ticket_process_close($id)
+    {
+        try {
+            $ticket = Ticket::find($id);
+            $ticket->update([
+                'status' => 2
+            ]);
+            return redirect()->route('admin.ticket.proses')->with('success', 'Berhasil menutup ticket...');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('failed', 'Terjadi Kesalahan Server...');
+        }
+    }
+
+    public function ticket_closed()
+    {
+        if ($this->request->ajax()) {
+            $data = Ticket::with(['user.member'])->where('status', '=', 2)->get()->append(['last_reply']);
+            return $this->basicDataTables($data);
+        }
+        return view('admin.ticket.tutup');
+    }
+
+    public function ticket_closed_detail($id)
+    {
+        $data = Ticket::with(['user.member', 'comments'])->where('id', '=', $id)->firstOrFail();
+        return view('admin.ticket.tutup-detail')->with(['data' => $data]);
     }
 }

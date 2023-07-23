@@ -1,6 +1,16 @@
 @extends('admin.layout')
 
 @section('content')
+    @if (\Illuminate\Support\Facades\Session::has('failed'))
+        <script>
+            Swal.fire("Gagal", '{{\Illuminate\Support\Facades\Session::get('failed')}}', "error")
+        </script>
+    @endif
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire("Berhasil", '{{\Illuminate\Support\Facades\Session::get('success')}}', "success")
+        </script>
+    @endif
     <div class="d-flex align-items-center justify-content-between mb-3">
         <p class="font-weight-bold mb-0" style="font-size: 20px">Halaman Ticket Baru</p>
         <ol class="breadcrumb breadcrumb-transparent mb-0">
@@ -13,13 +23,13 @@
     </div>
     <div class="w-100 p-2">
         <div class="card card-outline card-info">
-{{--            <div class="card-header">--}}
-{{--                <div class="text-right mb-2">--}}
-{{--                    <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAdd"><i--}}
-{{--                            class="fa fa-plus mr-1"></i><span--}}
-{{--                            class="font-weight-bold">Tambah</span></a>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            {{--            <div class="card-header">--}}
+            {{--                <div class="text-right mb-2">--}}
+            {{--                    <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalAdd"><i--}}
+            {{--                            class="fa fa-plus mr-1"></i><span--}}
+            {{--                            class="font-weight-bold">Tambah</span></a>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
             <div class="card-body">
                 <table id="table-data" class="display w-100 table table-bordered">
                     <thead>
@@ -51,12 +61,20 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="id" name="id" value="">
-                    <div class="w-100 mb-1">
-                        <label for="comment" class="form-label">Tanggapan</label>
-                        <textarea type="text" class="form-control" id="comment" placeholder="Tanggapan"
-                                  name="comment"></textarea>
-                    </div>
+                    <form method="post" enctype="multipart/form-data" id="form-comment">
+                        @csrf
+                        <input type="hidden" id="id" name="id" value="">
+                        <div class="w-100 mb-1">
+                            <label for="comment" class="form-label">Tanggapan</label>
+                            <textarea type="text" class="form-control" id="comment" placeholder="Tanggapan"
+                                      name="comment"></textarea>
+                        </div>
+                        <div class="w-100 mb-1">
+                            <label for="file" class="form-label">Lampiran</label>
+                            <input type="file" class="form-control" id="file"
+                                   name="file">
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -108,7 +126,6 @@
         }
 
 
-
         $(document).ready(function () {
             let url = '{{ route('admin.ticket.baru') }}';
             table = DataTableGenerator('#table-data', url, [
@@ -147,7 +164,7 @@
                     cancelButtonText: 'Batal',
                 }).then((result) => {
                     if (result.value) {
-                        store();
+                        $('#form-comment').submit();
                     }
                 });
             });

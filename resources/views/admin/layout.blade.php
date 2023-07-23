@@ -83,8 +83,22 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.ticket.baru') }}"
                        class="nav-link">
-                        <i class="fa fa-user nav-icon" aria-hidden="true"></i>
-                        <p>Ticket</p>
+                        <i class="fa fa-ticket nav-icon" aria-hidden="true"></i>
+                        <p>Baru</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.ticket.proses') }}"
+                       class="nav-link">
+                        <i class="fa fa-spinner nav-icon" aria-hidden="true"></i>
+                        <p>Proses</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.ticket.closed') }}"
+                       class="nav-link">
+                        <i class="fa fa-power-off nav-icon" aria-hidden="true"></i>
+                        <p>Tutup</p>
                     </a>
                 </li>
 
