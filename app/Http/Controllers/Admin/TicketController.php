@@ -92,11 +92,13 @@ class TicketController extends CustomController
     public function ticket_process_close($id)
     {
         try {
-            $ticket = Ticket::with(['user'])->findOrFail($id);
+            $ticket = Ticket::with(['user.member'])->findOrFail($id);
             $ticket->update([
                 'status' => 2
             ]);
-            Mail::to('damn.john88@gmail.com')->send(new SendMail($ticket));
+
+            $email = $ticket->user->member->email;
+            Mail::to($email)->send(new SendMail($ticket));
             return redirect()->route('admin.ticket.proses')->with('success', 'Berhasil menutup ticket...');
         } catch (\Exception $e) {
             return redirect()->back()->with('failed', 'Terjadi Kesalahan Server...');
