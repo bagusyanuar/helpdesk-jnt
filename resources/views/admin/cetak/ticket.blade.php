@@ -1,7 +1,7 @@
 @extends('admin.cetak.index')
 
 @section('content')
-    <div class="text-center report-title">LAPORAN Ticket</div>
+    <div class="text-center report-title">LAPORAN TICKET</div>
     <div class="text-center text-body font-weight-bold">Periode {{ $tgl1 }} - {{ $tgl2 }}</div>
     <hr>
     <table id="my-table" class="table display" style="margin-top: 10px">

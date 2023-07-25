@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Helper\CustomController;
+use App\Mail\SendMail;
 use App\Models\Comment;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class TicketController extends CustomController
 {
@@ -90,10 +92,11 @@ class TicketController extends CustomController
     public function ticket_process_close($id)
     {
         try {
-            $ticket = Ticket::find($id);
+            $ticket = Ticket::with(['user'])->findOrFail($id);
             $ticket->update([
                 'status' => 2
             ]);
+            Mail::to('damn.john88@gmail.com')->send(new SendMail($ticket));
             return redirect()->route('admin.ticket.proses')->with('success', 'Berhasil menutup ticket...');
         } catch (\Exception $e) {
             return redirect()->back()->with('failed', 'Terjadi Kesalahan Server...');
